@@ -2,9 +2,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    #[cfg(windows)]
-    nt_polyfill::init();
-
     // Entry point
     yupic_lib::run()
 }

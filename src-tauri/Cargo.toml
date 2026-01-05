@@ -29,7 +29,6 @@ tauri-build = { version = "2", features = [] }
 
 [dependencies]
 tauri = { version = "2", features = ["webview2-com"] }
-nt-polyfill = "0.1"
 tauri-plugin-opener = "2"
 tauri-plugin-dialog = "2"
 serde = { version = "1", features = ["derive"] }
@@ -43,9 +42,6 @@ exif = { package = "kamadak-exif", version = "0.6" }
 rayon = "1.10"
 
 [patch.crates-io]
-# Patch getrandom to avoid ProcessPrng on Windows 7
-# (Note: This is a common workaround for Windows 7 support in newer Rust)
-# getrandom = { git = "https://github.com/rust-random/getrandom", rev = "..." }
-# However, the most reliable way is often pinning to 1.77.2 which we already did.
-# Adding nt-polyfill to main.rs is the final step.
+# Force dependencies using getrandom 0.3 to use a version compatible with Windows 7
+# (Wait for now, let's see if toolchain pinning is enough)
 
