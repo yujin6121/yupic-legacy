@@ -33,7 +33,7 @@ tauri-plugin-opener = "2"
 tauri-plugin-dialog = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "bmp", "ico", "pnm", "tga", "tiff", "webp", "dds", "qoi", "avif"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "bmp", "ico", "webp", "avif"] }
 base64 = "0.22"
 libheif-rs = { version = "0.20", optional = true }
 jxl-oxide = { version = "0.9", optional = true }
@@ -44,4 +44,11 @@ rayon = "1.10"
 [patch.crates-io]
 # Force dependencies using getrandom 0.3 to use a version compatible with Windows 7
 # (Wait for now, let's see if toolchain pinning is enough)
+
+[profile.release]
+opt-level = "z"     # Optimize for size
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+panic = "abort"     # Remove panic unwinding to reduce binary size
+strip = true        # Automatically strip symbols from the binary
 
