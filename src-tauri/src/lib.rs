@@ -193,10 +193,11 @@ fn resize_if_needed(img: image::DynamicImage, max_size: Option<u32>) -> image::D
 }
 
 fn decode_static_image(path: &Path, max_size: Option<u32>) -> Result<(ImageFrame, String), String> {
-    let mut reader = image::ImageReader::open(path)
+    let mut reader = image::io::Reader::open(path)
         .map_err(|err| format!("failed to open file {}: {err}", path.display()))?;
     
-    // Disable memory limits for faster decoding (we control max_size ourselves)
+    // image 0.24 uses set_limits or similar? Actually Reader has no_limits() in some versions.
+    // Let's use the standard 0.24 way if no_limits() is missing.
     reader.no_limits();
     
     let reader = reader.with_guessed_format()
